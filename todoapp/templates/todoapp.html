@@ -1,42 +1,54 @@
 <!doctype html>
 <html ng-app="todoApp">
-  <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-cookies.js"></script>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-cookies.js"></script>
 
-    <script src="js/todoapp.js"></script>
+  <script src="js/todoapp.js"></script>
 
-    <link rel="stylesheet" href="css/todo.css">
+  <link rel="stylesheet" href="css/todo.css">
 
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-	<link href='http://fonts.googleapis.com/css?family=Lato:100,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato:100,400' rel='stylesheet' type='text/css'>
 
-  </head>
-  <body>
+</head>
+<body>
+  <div class="page-header">
     <h2>Todo</h2>
-    <div ng-controller="TodoListController as todoList">
-      <div class="loading" ng-show="loading">
-        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-        <span class="sr-only">Loading...</span>
-      </div>
-      <div class="data-div" ng-show="!loading">
+  </div>
+  <div ng-controller="TodoListController">
+    <div class="loading" ng-show="loading">
+      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="data-div row" ng-show="!loading">
+      <div class="col-lg-6 col-md-12 col-sm-12">
         <span>{{remaining()}} of {{todos.length}} remaining</span>
         [ <a href="" ng-click="archive()">archive</a> ]
-        <ul class="unstyled">
-          <li ng-repeat="todo in todos">
-            <label class="checkbox">
-              <input type="checkbox" ng-model="todo.status" ng-change="updateTodo(todo)" >
-              <span class="done-{{todo.status}}">{{todo.activity}}</span>
-            </label>
+        <ul class="list-group" ng-show="todos.length">
+          <li ng-repeat="todo in todos" class="list-group-item">
+            <input type="checkbox" ng-model="todo.status" ng-change="updateTodo(todo)" >
+            <span class="done-{{todo.status}}">{{todo.activity}}</span>
           </li>
         </ul>
+        <div ng-show="!todos.length" class="alert alert-success" role="alert">No Active Tasks</div>
+      </div>
+      <div class="col-lg-6 col-md-12 col-sm-12">
         <form ng-submit="addTodo()">
-          <input type="text" ng-model="todoText"  size="30"
-                 placeholder="add new todo here">
-          <input class="btn-primary" type="submit" value="add">
+          <div class="form-group">
+            <label for="addTodo">Add New Task</label>
+            <input type="text" class="form-control" ng-model="todoText"  size="30"
+            placeholder="add new todo here" id="addTodo">
+          </div>
+          <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="add">
+          </div>
         </form>
+
       </div>
     </div>
-  </body>
+  </div>
+</body>
 </html>
