@@ -27,12 +27,13 @@
       <div class="col-lg-6 col-md-12 col-sm-12">
         <span>{{remaining()}} of {{todos.length}} remaining</span>
         [ <a href="" ng-click="archive()">archive</a> ]
-        <ul class="list-group">
+        <ul class="list-group" ng-show="todos.length">
           <li ng-repeat="todo in todos" class="list-group-item">
             <input type="checkbox" ng-model="todo.status" ng-change="updateTodo(todo)" >
             <span class="done-{{todo.status}}">{{todo.activity}}</span>
           </li>
         </ul>
+        <div ng-show="!todos.length" class="alert alert-success" role="alert">All tasks are done. </div>
       </div>
       <div class="col-lg-6 col-md-12 col-sm-12">
         <form ng-submit="addTodo()">
