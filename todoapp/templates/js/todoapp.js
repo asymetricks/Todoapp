@@ -28,7 +28,6 @@ angular.module('todoApp', ['ngCookies'])
         $cookies.put('todo_token', response.data.token);
         $scope.loading = false;
     })
-      //todoList.todos.push({text:todoList.todoText, done:false});
       todoList.todoText = '';
     };
 
@@ -40,23 +39,29 @@ angular.module('todoApp', ['ngCookies'])
       return count;
     };
 
-    updateTodo(todo) = function {
-    $http({
+    $scope.updateTodo = function(todo) {
+        $http({
         method:'POST',
         url: '/api/task/',
         headers: {'Content-Type':'application/json','token': todo_token},
-        data: {task_id: todo.task_id, status: todo.status,},
+        data: {activity: todo.activity, task_id: todo.task_id, status: todo.status,},
         }).then(function(response) {
         $scope.todos = response.data.data;
         $cookies.put('todo_token', response.data.token);
         $scope.loading = false;
+    });
     }
 
     todoList.archive = function() {
-      var oldTodos = todoList.todos;
-      todoList.todos = [];
-      angular.forEach(oldTodos, function(todo) {
-        if (!todo.done) todoList.todos.push(todo);
-      });
-    };
+        $http({
+        method:'POST',
+        url: '/api/archive/',
+        headers: {'Content-Type':'application/json','token': todo_token},
+        data: {archive_now: true,},
+        }).then(function(response) {
+        $scope.todos = response.data.data;
+        $cookies.put('todo_token', response.data.token);
+        $scope.loading = false;
+    });
+    }
   });

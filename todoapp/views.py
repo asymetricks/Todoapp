@@ -20,13 +20,11 @@ def get_all_tasks(request):
 @csrf_exempt
 def upsert_task(request):
     token = get_token(request.META)
-    print 'zzzbzzzbzzz'
-    print request.POST
     print request.body
     post_data = json.loads(request.body)
     task_id = post_data.get('task_id')
-    print token
-    print task_id
+#   print token
+#   print task_id
 
     try:
         if task_id:
@@ -40,7 +38,22 @@ def upsert_task(request):
     task.activity = post_data.get('activity')
     task.is_archived = post_data.get('is_archived')
     task.status = post_data.get('status')
-    print task.to_json()
+#   print task.to_json()
     task.save()
+    response = {'message': 'success', 'token': token, 'data':get_tasks_by_token(token)}
+    return JsonResponse(response, safe=True, status=200)
+
+
+@require_http_methods(['POST'])
+@csrf_exempt
+def archive(request):
+    token = get_token(request.META)
+    print request.body
+    post_data = json.loads(request.body)
+    task_id = post_data.get('task_id')
+
+    if post_data.get('archive_now'):
+        Task.objects.filter(token=token, status=True).update(is_archived=True)
+
     response = {'message': 'success', 'token': token, 'data':get_tasks_by_token(token)}
     return JsonResponse(response, safe=True, status=200)

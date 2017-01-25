@@ -20,4 +20,5 @@ urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^all/$', views.get_all_tasks, name='get-all-tasks'),
     url(r'^task/$', views.upsert_task, name='upsert-task'),
+    url(r'^archive/$', views.archive, name='archive'),
 ]
