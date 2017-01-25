@@ -28,7 +28,7 @@
         <span>{{remaining()}} of {{todos.length}} remaining</span>
         [ <a href="" ng-click="archive()">archive</a> ]
         <ul class="list-group">
-          <li ng-repeat="todo in todos" class="list-group-item" ng-class="{{todo.status}}?list-group-item-success:list-group-item-info">
+          <li ng-repeat="todo in todos" class="list-group-item">
             <input type="checkbox" ng-model="todo.status" ng-change="updateTodo(todo)" >
             <span class="done-{{todo.status}}">{{todo.activity}}</span>
           </li>
