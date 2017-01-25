@@ -17,23 +17,23 @@ angular.module('todoApp', ['ngCookies'])
         $scope.loading = false;
       });
 
-    todoList.addTodo = function() {
+    $scope.addTodo = function() {
     $http({
         method:'POST',
         url: '/api/task/',
         headers: {'Content-Type':'application/json','token': todo_token},
-        data: {activity: todoList.todoText, status: false, is_archived: false,},
+        data: {activity: $scope.todoText, status: false, is_archived: false,},
         }).then(function(response) {
         $scope.todos = response.data.data;
         $cookies.put('todo_token', response.data.token);
         $scope.loading = false;
     })
-      todoList.todoText = '';
+      $scope.todoText = '';
     };
 
-    todoList.remaining = function() {
+    $scope.remaining = function() {
       var count = 0;
-      angular.forEach(todoList.todos, function(todo) {
+      angular.forEach($scope.todos, function(todo) {
         count += todo.status ? 0 : 1;
       });
       return count;
@@ -52,7 +52,7 @@ angular.module('todoApp', ['ngCookies'])
     });
     }
 
-    todoList.archive = function() {
+    $scope.archive = function() {
         $http({
         method:'POST',
         url: '/api/archive/',
