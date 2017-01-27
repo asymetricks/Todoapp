@@ -18,6 +18,7 @@ angular.module('todoApp', ['ngCookies'])
       });
 
     $scope.addTodo = function() {
+    $scope.loading = true;
     $http({
         method:'POST',
         url: '/api/task/',
@@ -40,7 +41,8 @@ angular.module('todoApp', ['ngCookies'])
     };
 
     $scope.updateTodo = function(todo) {
-        $http({
+    $scope.loading = true;
+    $http({
         method:'POST',
         url: '/api/task/',
         headers: {'Content-Type':'application/json','token': todo_token},
@@ -53,7 +55,8 @@ angular.module('todoApp', ['ngCookies'])
     }
 
     $scope.archive = function() {
-        $http({
+    $scope.loading = true;
+    $http({
         method:'POST',
         url: '/api/archive/',
         headers: {'Content-Type':'application/json','token': todo_token},
